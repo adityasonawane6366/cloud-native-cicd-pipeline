@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     stages {
+
         stage('Checkout') {
             steps {
                 git branch: 'main',
@@ -9,16 +10,13 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Deploy on EC2') {
             steps {
-                sh 'docker build -t cicd-app:latest .'
-            }
-        }
-
-        stage('Run Container') {
-            steps {
-                sh 'docker rm -f cicd-app || true'
-                sh 'docker run -d -p 80:5000 --name cicd-app cicd-app:latest'
+                sh '''
+                docker build -t cicd-app .
+                docker rm -f cicd-app || true
+                docker run -d -p 80:5000 --name cicd-app cicd-app
+                '''
             }
         }
     }
