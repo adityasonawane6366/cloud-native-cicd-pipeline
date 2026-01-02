@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/YOUR_USER/cicd-demo.git'
+                git 'https://github.com/adityasonawane6366/cloud-native-cicd-pipeline.git'
             }
         }
 
